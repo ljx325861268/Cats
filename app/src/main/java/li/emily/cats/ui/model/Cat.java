@@ -3,6 +3,7 @@ package li.emily.cats.ui.model;
 import java.util.HashMap;
 
 public class Cat {
+    private String id;
     private String name;
     private String description;
     private HashMap<String, String> weight;
@@ -11,6 +12,14 @@ public class Cat {
     private String life_span;
     private String wikipedia_url;
     private String dog_friendly;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

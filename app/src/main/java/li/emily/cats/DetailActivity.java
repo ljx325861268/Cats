@@ -4,16 +4,27 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import java.net.URL;
+import java.util.Set;
 
 import li.emily.cats.ui.model.Cat;
+import li.emily.cats.ui.model.Favourites;
+import li.emily.cats.ui.model.Image;
 
 public class DetailActivity extends AppCompatActivity {
     TextView name;
@@ -33,7 +44,6 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Cat c = new Gson().fromJson(intent.getStringExtra("cat"), Cat.class);
-        System.out.println(c);
 
         name= findViewById(R.id.id_name);
         description = findViewById(R.id.id_discribution);
@@ -57,16 +67,71 @@ public class DetailActivity extends AppCompatActivity {
         String metric = c.getWeight().get("metric");
         weight.setText("Imperial: " + imperial + "\n Metric: " + metric);
 
+        String breed_id = c.getId();
 
-        try {
-            URL url = new URL("https://cdn2.thecatapi.com/images/gVrhv_yAY.jpg");
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            image.setImageBitmap(bmp);
-        } catch (Exception e) {
-
+        if(breed_id != null) {
+            callImageAPI(breed_id);
         }
 
+    }
 
+    public void callImageAPI(String breed_id){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "https://api.thecatapi.com/v1/images/search?breed_id=" + breed_id;
+
+        final Response.Listener<String> listener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Image[] url = new Gson().fromJson(response, Image[].class);
+                if(url != null && url[0] != null && url[0].getUrl() != null){
+                    getImage(url[0].getUrl());
+                }
+            }
+        };
+
+        final Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("uh oh");
+            }
+        };
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, listener, errorListener);
+
+        queue.add(stringRequest);
+    }
+
+    public void getImage(String imageUrl){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = imageUrl;
+
+        final Response.Listener<Bitmap> listener = new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                image.setImageBitmap(response);
+            }
+        };
+
+        final Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("uh oh");
+            }
+        };
+        // Request a string response from the provided URL.
+        ImageRequest imageRequest = new ImageRequest(url, listener, 0, 0, null, errorListener);
+
+        // Add the request to the RequestQueue.
+        queue.add(imageRequest);
+    }
+
+    public void onClickFavourites(View v){
+        String n = name.getText().toString();
+        if(!Favourites.getFavourites().contains(n)) {
+            Favourites.addFavourite(n);
+        }
     }
 
 }

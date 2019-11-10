@@ -23,7 +23,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="351dp"
+                android:layout_height="220dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -59,26 +59,33 @@
             <TextView
                 android:id="@+id/id_origin"
                 android:layout_width="match_parent"
-                android:layout_height="66dp"
+                android:layout_height="37dp"
                 android:text="Origin" />
 
             <TextView
                 android:id="@+id/id_lifespan"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="29dp"
                 android:text="Life Span" />
 
             <TextView
                 android:id="@+id/id_wiki"
                 android:layout_width="match_parent"
-                android:layout_height="78dp"
+                android:layout_height="wrap_content"
                 android:text="Wikipedia link" />
 
             <TextView
                 android:id="@+id/id_dogfriendliness"
                 android:layout_width="match_parent"
-                android:layout_height="59dp"
+                android:layout_height="wrap_content"
                 android:text="Dog Friendliness" />
+
+            <Button
+                android:id="@+id/id_favourite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickFavourites"
+                android:text="Favourite" />
         </LinearLayout>
     </ScrollView>
 

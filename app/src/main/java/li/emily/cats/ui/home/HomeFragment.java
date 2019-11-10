@@ -38,14 +38,12 @@ import li.emily.cats.ui.model.FakeData;
 
 public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnNoteListener{
 
-    private HomeViewModel homeViewModel;
     private EditText editText;
     private ImageView icon;
     private HashMap<Integer, Cat> catMap;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         return root;
