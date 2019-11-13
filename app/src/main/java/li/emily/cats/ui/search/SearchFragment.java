@@ -1,4 +1,4 @@
-package li.emily.cats.ui.home;
+package li.emily.cats.ui.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,13 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,17 +22,15 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import li.emily.cats.DetailActivity;
 import li.emily.cats.R;
 import li.emily.cats.ui.adapter.RecyclerViewAdapter;
 import li.emily.cats.ui.model.Cat;
-import li.emily.cats.ui.model.CatWrapper;
-import li.emily.cats.ui.model.FakeData;
+import li.emily.cats.ui.model.Image;
 
-public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnNoteListener{
+public class SearchFragment extends Fragment implements RecyclerViewAdapter.OnNoteListener{
 
     private EditText editText;
     private ImageView icon;
@@ -66,13 +60,12 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnNote
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url ="https://api.thecatapi.com/v1/breeds/search?q=" + searchTerm;
-
+        //String url = "https://api.thecatapi.com/v1/images/search?breed_id=" + searchTerm;
         catMap.clear();
 
         final Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 Cat[] res = new Gson().fromJson(response, Cat[].class);
                 for(int i = 0; i < res.length; i++){
                     catMap.put(i, res[i]);
@@ -90,7 +83,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnNote
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, listener, errorListener);
 
-// Add the request to the RequestQueue.
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
@@ -110,4 +103,6 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnNote
         intent.putExtra("cat", new Gson().toJson(cat));
         startActivity(intent);
     }
+
+
 }
