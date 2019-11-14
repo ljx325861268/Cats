@@ -1,5 +1,7 @@
 package li.emily.cats.ui.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 
 public class Cat {
@@ -11,7 +13,8 @@ public class Cat {
     private String origin;
     private String life_span;
     private String wikipedia_url;
-    private String dog_friendly;
+    private int dog_friendly;
+   // private String dog_friendly;
 
     public String getId() {
         return id;
@@ -77,11 +80,11 @@ public class Cat {
         this.wikipedia_url = wikipedia_url;
     }
 
-    public String getDog_friendly() {
+    public int getDog_friendly() {
         return dog_friendly;
     }
 
-    public void setDog_friendly(String dog_friendly) {
+    public void setDog_friendly(int dog_friendly) {
         this.dog_friendly = dog_friendly;
     }
 }

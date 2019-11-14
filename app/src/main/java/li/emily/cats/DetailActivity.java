@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -64,9 +65,9 @@ public class DetailActivity extends AppCompatActivity {
         description.setText(c.getDescription());
         origin.setText("Origin: " + c.getOrigin());
         lifespan.setText("Lifespan: " + c.getLife_span());
-        wiki.setText("Wikipedia URL\n" + c.getWikipedia_url());
-        dogfriendliness.setText("Dog Friendliness:" + c.getDog_friendly());
-        temperament.setText("Temperament:"+ c.getTemperament());
+        wiki.setText("Wikipedia URL：\n" + c.getWikipedia_url());
+        dogfriendliness.setText("Dog Friendliness: " + c.getDog_friendly());
+        temperament.setText("Temperament: "+ c.getTemperament());
 
         String imperial = c.getWeight().get("imperial");
         String metric = c.getWeight().get("metric");
